@@ -1,1 +1,344 @@
-// Changes should be made
+// =========================================================
+// PAGES — CART
+// =========================================================
+@use '../abstracts' as *;
+
+// ---- Hero -----------------------------------------------
+.cart-hero {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: url('../../../src/assets/My Cart/banner image.jpg') center center / cover no-repeat;
+
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 0;
+    }
+
+    &__content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        color: $color-white;
+
+        h1 {
+            font-size: 2.8em;
+            font-weight: 900;
+            letter-spacing: 0.01em;
+        }
+    }
+
+    @media (max-width: $breakpoint-sm) {
+        height: 160px;
+
+        &__content h1 {
+            font-size: 2em;
+        }
+    }
+}
+
+// ---- Cart section wrapper -------------------------------
+.cart-section {
+    padding: 60px 10%;
+    min-height: 400px;
+
+    @media (max-width: $breakpoint-md) {
+        padding: 40px 5%;
+    }
+
+    @media (max-width: $breakpoint-sm) {
+        padding: 28px 4%;
+    }
+}
+
+// ---- Empty state ----------------------------------------
+.cart-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 80px 20px;
+    text-align: center;
+
+    p {
+        font-size: 1.2em;
+        color: $color-gray-text;
+    }
+}
+
+// ---- Thank-you state ------------------------------------
+.cart-thank-you {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 80px 20px;
+    text-align: center;
+
+    p {
+        font-size: 1.6em;
+        font-weight: 700;
+        color: $color-black;
+    }
+}
+
+// ---- Table ----------------------------------------------
+.cart-table-wrap {
+    overflow-x: auto;
+    margin-bottom: 40px;
+}
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: $font-montserrat;
+
+    thead {
+        tr {
+            background: $color-gray-text;
+        }
+
+        th {
+            padding: 16px 20px;
+            color: $color-white;
+            font-size: 0.78em;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-align: left;
+
+            &:first-child {
+                text-align: center;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            border-bottom: 1px solid $color-gray-border;
+            transition: background $transition;
+
+            &:last-child {
+                border-bottom: 1px solid $color-gray-border;
+            }
+
+            &:hover {
+                background: #E7E8E9;
+                opacity: 95%;
+            }
+        }
+
+        td {
+            padding: 20px;
+            vertical-align: middle;
+        }
+    }
+}
+
+// ---- Row cells ------------------------------------------
+.cart-row {
+    &__img {
+        text-align: center;
+        width: 100px;
+
+        img {
+            width: 72px;
+            height: 72px;
+            object-fit: contain;
+        }
+    }
+
+    &__name {
+        font-weight: 700;
+        font-size: 0.95em;
+        color: $color-black;
+        min-width: 160px;
+    }
+
+    &__price {
+        font-size: 0.95em;
+        color: $color-black;
+        min-width: 80px;
+    }
+
+    &__qty {
+        min-width: 120px;
+    }
+
+    &__total {
+        font-size: 0.95em;
+        font-weight: 700;
+        color: $color-black;
+        min-width: 80px;
+    }
+
+    &__delete {
+        text-align: center;
+        min-width: 60px;
+    }
+}
+
+// ---- Qty control ----------------------------------------
+.cart-qty {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+
+    &__btn {
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2em;
+        font-weight: 700;
+        color: $color-black;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        line-height: 1;
+        transition: color $transition;
+
+        &:hover {
+            color: $color-primary;
+        }
+    }
+
+    &__val {
+        font-size: 0.95em;
+        font-weight: 600;
+        min-width: 20px;
+        text-align: center;
+    }
+}
+
+// ---- Delete button --------------------------------------
+.cart-delete-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: $color-primary;
+    display: inline-flex;
+    align-items: center;
+    transition: opacity $transition;
+
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+// ---- Cart footer (actions + summary) --------------------
+.cart-footer {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 40px;
+    align-items: start;
+
+    @media (max-width: $breakpoint-lg) {
+        grid-template-columns: 1fr;
+    }
+}
+
+// ---- Action buttons -------------------------------------
+.cart-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+
+    .btn--outline {
+        padding: 14px 24px;
+        border: 2px solid $color-primary;
+        background: transparent;
+        color: $color-primary;
+        font-family: $font-montserrat;
+        font-size: 0.78em;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        transition: background $transition, color $transition;
+
+        &:hover {
+            background: $color-primary;
+            color: $color-white;
+        }
+    }
+}
+
+// ---- Summary box ----------------------------------------
+.cart-summary {
+    background: $color-gray-text;
+    padding: 32px 36px;
+    color: $color-white;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    &__row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 0;
+        font-size: 0.95em;
+        font-weight: 500;
+
+        &--total {
+            font-weight: 700;
+            font-size: 1em;
+        }
+    }
+
+    &__divider {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    &__discount {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0 0;
+        font-size: 0.85em;
+        color: $color-primary;
+        opacity: 80%;
+
+        &-label {
+            font-style: italic;
+        }
+    }
+
+    &__checkout {
+        margin-top: 24px;
+        width: 100%;
+        padding: 16px;
+        font-size: 0.85em;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 700;
+        background: $color-primary;
+        color: $color-white;
+        border: none;
+        cursor: pointer;
+        font-family: $font-montserrat;
+        transition: opacity $transition;
+
+        &:hover {
+            opacity: 0.88;
+        }
+    }
+
+    @media (max-width: $breakpoint-sm) {
+        padding: 24px 20px;
+    }
+}

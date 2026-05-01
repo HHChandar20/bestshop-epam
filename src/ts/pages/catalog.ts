@@ -6,7 +6,7 @@ import type { SortKey } from '../models/enums.js';
 import type { Product } from '../models/types.js';
 import { fetchProducts } from '../services/api.js';
 import { addToCart, updateCartCountUI } from '../services/cart.js';
-import { renderStars, showToast, shuffleArray } from '../ui.js';
+import { renderStars, showToast, shuffleArray } from '../utils/ui.js';
 
 // ---------------------------------------------------------
 // State
@@ -355,5 +355,9 @@ function renderTopBestSets(): void {
         sidebar.appendChild(item);
     });
 }
+
+// ---------------------------------------------------------
+// Bootstrap
+// ---------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', init);

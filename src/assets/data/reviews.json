@@ -1,0 +1,28 @@
+{
+    "reviews": [
+        {
+        "id": "REV001",
+        "productId": "SU001",
+        "username": "Ivan",
+        "rating": 5,
+        "comment": "Amazing suitcase, very durable!",
+        "date": "2026-05-01"
+        },
+        {
+        "id": "REV002",
+        "productId": "SU001",
+        "username": "Maria",
+        "rating": 4,
+        "comment": "Good quality but slightly heavy.",
+        "date": "2026-05-02"
+        },
+        {
+        "id": "REV003",
+        "productId": "CO019",
+        "username": "Alex",
+        "rating": 5,
+        "comment": "Perfect carry-on for weekend trips.",
+        "date": "2026-05-03"
+        }
+    ]
+}

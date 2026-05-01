@@ -2,6 +2,8 @@
 // CONTACT US — Form Validation & Submission
 // =========================================================
 
+import { updateCartCountUI } from '../services/cart.js';
+
 interface FieldState {
     input: HTMLInputElement | HTMLTextAreaElement;
     errorEl: HTMLElement;
@@ -133,26 +135,26 @@ function initContactForm(): void {
 
     // ---- Real-time validation (on blur) -------------------
     nameState.input.addEventListener("blur", () =>
-        validateField(nameState!)
+        validateField(nameState)
     );
 
     emailState.input.addEventListener("blur", () =>
-        validateField(emailState!, true)
+        validateField(emailState, true)
     );
 
     // Live email check while typing (after first blur)
     let emailTouched = false;
     emailState.input.addEventListener("blur", () => { emailTouched = true; });
     emailState.input.addEventListener("input", () => {
-        if (emailTouched) validateField(emailState!, true);
+        if (emailTouched) validateField(emailState, true);
     });
 
     topicState.input.addEventListener("blur", () =>
-        validateField(topicState!)
+        validateField(topicState)
     );
 
     messageState.input.addEventListener("blur", () =>
-        validateField(messageState!)
+        validateField(messageState)
     );
 
     // ---- Submit -------------------------------------------
@@ -161,11 +163,11 @@ function initContactForm(): void {
 
     sendBtn.addEventListener("click", () => {
         const valid = [
-        validateField(nameState!),
-        validateField(emailState!, true),
-        validateField(topicState!),
-        validateField(messageState!),
-        ].every(Boolean);
+            validateField(nameState),
+            validateField(emailState, true),
+            validateField(topicState),
+            validateField(messageState),
+            ].every(Boolean);
 
         if (!valid) return;
 
@@ -180,9 +182,9 @@ function initContactForm(): void {
 
         if (success) {
             // Reset form fields
-            [nameState!, emailState!, topicState!, messageState!].forEach((s) => {
-            s.input.value = "";
-            clearError(s);
+            [nameState, emailState, topicState, messageState].forEach((s) => {
+                s.input.value = "";
+                clearError(s);
             });
         }
 
@@ -192,5 +194,9 @@ function initContactForm(): void {
     });
 }
 
-// Run after DOM is ready
-document.addEventListener("DOMContentLoaded", initContactForm);
+// ---- Bootstrap ------------------------------------------
+
+document.addEventListener("DOMContentLoaded", () => {
+    updateCartCountUI();
+    initContactForm();
+});

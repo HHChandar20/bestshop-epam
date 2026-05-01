@@ -1,7 +1,7 @@
-"use strict";
 // =========================================================
 // CONTACT US — Form Validation & Submission
 // =========================================================
+import { updateCartCountUI } from '../services/cart.js';
 // ---- Helpers --------------------------------------------
 function isValidEmail(value) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -144,5 +144,8 @@ function initContactForm() {
         }, 1200);
     });
 }
-// Run after DOM is ready
-document.addEventListener("DOMContentLoaded", initContactForm);
+// ---- Bootstrap ------------------------------------------
+document.addEventListener("DOMContentLoaded", () => {
+    updateCartCountUI();
+    initContactForm();
+});

@@ -12,7 +12,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { fetchProducts } from '../services/api.js';
 import { addToCart, updateCartCountUI } from '../services/cart.js';
-import { renderStars, showToast, shuffleArray } from '../ui.js';
+import { renderStars, showToast, shuffleArray } from '../utils/ui.js';
 // ---------------------------------------------------------
 // State
 // ---------------------------------------------------------
@@ -338,4 +338,7 @@ function renderTopBestSets() {
         sidebar.appendChild(item);
     });
 }
+// ---------------------------------------------------------
+// Bootstrap
+// ---------------------------------------------------------
 document.addEventListener('DOMContentLoaded', init);

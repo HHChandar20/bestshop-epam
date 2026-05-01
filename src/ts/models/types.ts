@@ -21,3 +21,12 @@ export interface CartItem {
   imageUrl: string;
   quantity: number;
 }
+
+export type Review = {
+  id: string;
+  productId: string;
+  username: string;
+  rating: number;
+  comment: string;
+  date: string;
+};

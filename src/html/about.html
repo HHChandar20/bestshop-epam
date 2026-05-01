@@ -31,7 +31,7 @@
                     <a class="icon-btn" aria-label="Account" id="accountBtn" href="login.html">
                         <img src="../assets/Homepage/user.svg" alt="Account" width="30" height="33"/>
                     </a>
-                    <a class="icon-btn cart-btn" aria-label="Cart" id="cartBtn">
+                    <a href="cart.html" class="icon-btn cart-btn" aria-label="Cart" id="cartBtn">
                         <img src="../assets/Homepage/shopping-cart.svg" alt="Cart" width="33" height="33"/>
                         <span class="cart-count" id="cartCount">0</span>
                     </a>
@@ -136,7 +136,7 @@
                 nisi urna. Duis vestibulum elit vel neque pharetra vulputateuisque 
                 scelerisque nisi urna.</p>
 
-                <button class="btn btn--primary" href="catalog.html">See All Models</button>
+                <a class="btn btn--primary" href="catalog.html">See All Models</a>
             </div>
 
             <div class="arrivals__image">
@@ -341,5 +341,7 @@
             document.getElementById('navLinks').classList.toggle('open');
             });
         </script>
+
+        <script type="module" src="../../dist/js/pages/about.js"></script>
     </body>
 </html>

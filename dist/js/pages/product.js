@@ -10,14 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { fetchProducts } from '../services/api.js';
+import { fetchProducts, fetchReviews } from '../services/api.js';
 import { addToCart, updateCartCountUI } from '../services/cart.js';
-import { renderStars, showToast, shuffleArray } from '../ui.js';
+import { renderStars, showToast, shuffleArray } from '../utils/ui.js';
 // ---------------------------------------------------------
 // State
 // ---------------------------------------------------------
 let currentProduct = null;
 let allProducts = [];
+let allReviews = [];
 let quantity = 1;
 // ---------------------------------------------------------
 // Init
@@ -30,7 +31,16 @@ function init() {
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
         try {
-            allProducts = yield fetchProducts();
+            const [products, reviews] = yield Promise.all([
+                fetchProducts(),
+                fetchReviews(),
+            ]);
+            const localReviews = JSON.parse(localStorage.getItem('reviews') || '[]');
+            // Deduplicate: exclude local reviews whose ID already exists in the API response
+            const apiIds = new Set(reviews.map((r) => r.id));
+            const uniqueLocalReviews = localReviews.filter((r) => !apiIds.has(r.id));
+            allProducts = products;
+            allReviews = [...reviews, ...uniqueLocalReviews];
         }
         catch (err) {
             showError('Failed to load products.');
@@ -47,6 +57,8 @@ function init() {
         }
         currentProduct = product;
         renderProduct(product);
+        renderReviews(product.id);
+        initReviewForm(product.id);
         renderRelated(product);
         initCartButton();
     });
@@ -56,46 +68,80 @@ function init() {
 // ---------------------------------------------------------
 function renderProduct(p) {
     document.title = `${p.name} — Best Shop`;
-    const imgEl = document.querySelector('.product-detail__img img');
-    if (imgEl) {
-        imgEl.src = p.imageUrl;
-        imgEl.alt = p.name;
+    const imgElement = document.querySelector('.product-detail__img img');
+    if (imgElement) {
+        imgElement.src = p.imageUrl;
+        imgElement.alt = p.name;
     }
     const badge = document.querySelector('.product-detail__badge');
     if (badge)
         badge.style.display = p.salesStatus ? 'inline-block' : 'none';
-    const nameEl = document.querySelector('.product-detail__name');
-    if (nameEl)
-        nameEl.textContent = p.name;
-    const priceEl = document.querySelector('.product-detail__price');
-    if (priceEl)
-        priceEl.textContent = `$${p.price}`;
-    const starsEl = document.querySelector('.product-detail__stars');
-    if (starsEl)
-        starsEl.innerHTML = renderStars(p.rating);
+    const nameElement = document.querySelector('.product-detail__name');
+    if (nameElement)
+        nameElement.textContent = p.name;
+    const priceElement = document.querySelector('.product-detail__price');
+    if (priceElement)
+        priceElement.textContent = `$${p.price}`;
+    const starsElement = document.querySelector('.product-detail__stars');
+    if (starsElement)
+        starsElement.innerHTML = renderStars(p.rating);
+    const reviewProductName = document.querySelector('.reviews-section__product-name');
+    if (reviewProductName)
+        reviewProductName.textContent = p.name;
     renderThumbnails(p);
     populateSelect('sizeSelect', p.size.split(',').map((s) => s.trim()), p.size.split(',')[0].trim());
     populateSelect('colorSelect', [p.color], p.color);
     populateSelect('categorySelect', [p.category], p.category);
 }
 function renderThumbnails(p) {
-    const thumbsEl = document.getElementById('thumbnails');
-    const imgEl = document.querySelector('.product-detail__img img');
-    if (!thumbsEl || !imgEl)
+    const thumbsElement = document.getElementById('thumbnails');
+    const imgElement = document.querySelector('.product-detail__img img');
+    if (!thumbsElement || !imgElement)
         return;
-    thumbsEl.innerHTML = '';
-    // Placeholder: same image for all angles until per-product images exist
+    thumbsElement.innerHTML = '';
     [p.imageUrl, p.imageUrl, p.imageUrl, p.imageUrl].forEach((src, i) => {
         const div = document.createElement('div');
         div.className = 'product-detail__thumb' + (i === 0 ? ' product-detail__thumb--active' : '');
         div.innerHTML = `<img src="${src}" alt="${p.name} angle ${i + 1}" />`;
         div.addEventListener('click', () => {
-            imgEl.src = src;
-            thumbsEl.querySelectorAll('.product-detail__thumb').forEach((t) => t.classList.remove('product-detail__thumb--active'));
+            imgElement.src = src;
+            thumbsElement.querySelectorAll('.product-detail__thumb').forEach((t) => t.classList.remove('product-detail__thumb--active'));
             div.classList.add('product-detail__thumb--active');
         });
-        thumbsEl.appendChild(div);
+        thumbsElement.appendChild(div);
     });
+}
+function renderReviews(productId) {
+    const container = document.getElementById('reviewsList');
+    if (!container)
+        return;
+    const reviews = allReviews.filter((r) => r.productId === productId);
+    const count = document.getElementById('reviewsCount');
+    if (count)
+        count.textContent = String(reviews.length);
+    if (reviews.length === 0) {
+        container.innerHTML = `<p class="reviews-empty">No reviews yet.</p>`;
+        return;
+    }
+    container.innerHTML = reviews.map((r) => `
+        <article class="review-card">
+        <div class="review-card__avatar">
+            ${r.username.charAt(0).toUpperCase()}
+        </div>
+        <div class="review-card__content">
+            <div class="review-card__top">
+            <div class="review-card__meta">
+                ${r.username}
+                <span>/ ${new Date(r.date).toLocaleDateString()}</span>
+            </div>
+            <div class="review-card__stars">
+                ${renderStars(r.rating)}
+            </div>
+            </div>
+            <p class="review-card__comment">${r.comment}</p>
+        </div>
+        </article>
+    `).join('');
 }
 function populateSelect(id, options, selected) {
     const select = document.getElementById(id);
@@ -209,6 +255,77 @@ function initCartButton() {
     });
 }
 // ---------------------------------------------------------
+// Review Form
+// ---------------------------------------------------------
+function initReviewForm(productId) {
+    const form = document.getElementById('reviewForm');
+    if (!form)
+        return;
+    // --- Star rating wiring ---
+    const ratingInput = document.getElementById('ratingInput');
+    const starContainer = document.getElementById('starRating');
+    const stars = document.querySelectorAll('.star-rating__star');
+    let selectedRating = 0;
+    function updateStars(fillUpTo, isSelected = false) {
+        stars.forEach((s) => {
+            const sv = Number(s.dataset.value);
+            const filled = sv <= fillUpTo;
+            s.textContent = filled ? '★' : '☆';
+            s.classList.toggle('is-selected', isSelected && sv <= selectedRating);
+            s.classList.toggle('is-hovered', !isSelected && filled);
+        });
+    }
+    // Mouse leave on the container resets to selected state
+    starContainer === null || starContainer === void 0 ? void 0 : starContainer.addEventListener('mouseleave', () => {
+        updateStars(selectedRating, true);
+    });
+    stars.forEach((star) => {
+        const val = Number(star.dataset.value);
+        star.addEventListener('mouseenter', () => {
+            updateStars(val, false);
+        });
+        star.addEventListener('click', () => {
+            selectedRating = val;
+            ratingInput.value = String(val);
+            updateStars(selectedRating, true);
+        });
+    });
+    // --- Form submit ---
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const username = String(formData.get('username') || '').trim();
+        const comment = String(formData.get('comment') || '').trim();
+        const rating = Number(ratingInput.value);
+        if (!username || !comment || !rating)
+            return;
+        const review = {
+            id: crypto.randomUUID(),
+            productId,
+            username,
+            comment,
+            rating,
+            date: new Date().toISOString(),
+        };
+        // Only save user-submitted reviews to localStorage (never API reviews)
+        const existingLocal = JSON.parse(localStorage.getItem('reviews') || '[]');
+        existingLocal.unshift(review);
+        localStorage.setItem('reviews', JSON.stringify(existingLocal));
+        // Update in-memory list and re-render
+        allReviews.unshift(review);
+        renderReviews(productId);
+        // Reset form and stars
+        form.reset();
+        selectedRating = 0;
+        ratingInput.value = '';
+        stars.forEach((s) => {
+            s.classList.remove('is-selected', 'is-hovered');
+            s.textContent = '☆';
+        });
+        showToast('Review submitted!');
+    });
+}
+// ---------------------------------------------------------
 // Error
 // ---------------------------------------------------------
 function showError(message) {
@@ -221,4 +338,7 @@ function showError(message) {
         </div>`;
     }
 }
+// ---------------------------------------------------------
+// Bootstrap
+// ---------------------------------------------------------
 document.addEventListener('DOMContentLoaded', init);
