@@ -1,0 +1,94 @@
+// =========================================================
+// LAYOUTS — FOOTER
+// =========================================================
+@use '../abstracts' as *;
+
+.footer {
+    background: $color-white;
+    padding: 56px 10% 32px;
+
+    &__top {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 2fr;
+        gap: 40px;
+        padding-bottom: 40px;
+        border-bottom: 1px solid #e8e8f0;
+        margin-bottom: 40px;
+    }
+
+    &__col {
+        h4 {
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+
+            a {
+                font-size: 0.9em;
+                &:hover {
+                    color: $color-primary;
+                }
+            }
+        }
+
+        p {
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+    }
+
+    &__contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px 24px;
+    }
+
+    &__bottom {
+        padding-bottom: 32px;
+        border-bottom: 1px solid #e8e8f0;
+        margin-bottom: 24px;
+    }
+
+    &__shipping {
+        h4 {
+            font-weight: 700;
+
+            // BELOW TO VIEW PX - EM CONVERSION
+            // MAYBE DONT USE HEADINGS, INSTEAD USE PARAGRAPHS WITH NTH-CHILD SELECTORS
+
+
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 0.9em;
+            line-height: 1.7;
+            max-width: 600px;
+        }
+    }
+
+    &__copyright {
+        text-align: center;
+
+        p {
+            font-size: 0.9em;
+            opacity: 35%;
+        }
+    }
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.9em;
+
+    svg {
+        color: $color-primary;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+}

@@ -1,0 +1,26 @@
+// =========================================================
+// ABSTRACTS — VARIABLES
+// =========================================================
+
+// ---- Colors ---------------------------------------------
+$color-black:       #000000;
+$color-white:       #FFFFFF;
+$color-primary:     #B92770;
+$pink-dark:         #c0123f;
+$color-gray-hr:     #727174;
+$color-gray-text:   #504E4A;
+$color-gray-bg:     #E7E8E9;
+$color-yellow:      #F5B423;
+$color-gray-border: #E9E9ED;
+
+// ---- Typography -----------------------------------------
+$font-montserrat: 'Montserrat', sans-serif;
+
+// ---- Breakpoints ----------------------------------------
+$breakpoint-sm: 320px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1440px;
+
+// ---- Motion -------------------------------------------
+$transition: .25s ease;

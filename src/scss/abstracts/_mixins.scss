@@ -1,0 +1,46 @@
+// =========================================================
+// ABSTRACTS — MIXINS
+// =========================================================
+
+@use 'variables' as *;
+
+@mixin respond-to($breakpoint) {
+    @if $breakpoint == sm {
+        @media (max-width: $breakpoint-sm) { @content; }
+    } @else if $breakpoint == md {
+        @media (max-width: $breakpoint-md) { @content; }
+    } @else if $breakpoint == lg {
+        @media (max-width: $breakpoint-lg) { @content; }
+    } @else if $breakpoint == xl {
+        @media (max-width: $breakpoint-xl) { @content; }
+    }
+}
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin absolute-fill {
+    position: absolute;
+    inset: 0;
+}
+
+@mixin card-hover-lift($depth: -6px, $shadow: 0 12px 48px rgba(26,26,46,.18)) {
+    transition: all $transition;
+    &:hover {
+        transform: translateY($depth);
+        box-shadow: $shadow;
+    }
+}
+
+@mixin overlay-gradient($color: rgba(0,0,0,.7), $direction: to top) {
+    background: linear-gradient(transparent, $color);
+}
+
+@mixin img-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

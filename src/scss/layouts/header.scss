@@ -1,0 +1,185 @@
+// =========================================================
+// LAYOUTS — HEADER & NAVIGATION
+// =========================================================
+@use '../abstracts' as *;
+
+.header {
+    position: sticky;
+    top: 0;
+    padding-top: 2.5em;
+    z-index: 999;
+    background: $color-white;
+    transition: box-shadow $transition;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &__social {
+        display: flex;
+        gap: 1.5em;
+    }
+
+    &__logo {
+        font-weight: 700;
+        font-size: 2em;
+        text-transform: uppercase;
+        line-height: 100%;
+        letter-spacing: 0%;
+        color: $color-primary;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+
+        &__icon {
+            background: $color-primary;
+            width: 32px;
+            height: 32px;
+            border-radius: 0.2em;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    &__line {
+        margin-top: 2em;
+        opacity: 20%;
+        color: $color-gray-hr;
+        width: 75%;
+        align-self: center;
+    }
+
+    &__nav {
+        display: flex;
+        align-items: center;
+        padding: 14px 5%;
+        gap: 32px;
+    }
+}
+
+.upper__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px;
+}
+
+// ---- Nav links ------------------------------------------
+.nav__links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0 auto;
+}
+
+.nav__link {
+    font-weight: 700;
+    font-size: 1.3em;
+    line-height: 100%;
+    letter-spacing: 0%;
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: all $transition;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    &:hover, &--active {
+        color: $color-primary;
+    }
+}
+
+// ---- Dropdown -------------------------------------------
+.nav__item--dropdown {
+    position: relative;
+
+    &:hover .dropdown {
+        opacity: 1;
+        pointer-events: all;
+        transform: translateY(0);
+    }
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 160px;
+    background: $color-white;
+    border-radius: 12px;
+    box-shadow: 0 12px 48px rgba(26,26,46,.18);
+    border: 1px solid #e8e8f0;
+    padding: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: all $transition;
+
+    li a {
+        display: block;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 1.1em;
+
+        &:hover {
+            background: #f7f7fb;
+            color: $color-primary;
+        }
+    }
+}
+
+// ---- Hamburger ------------------------------------------
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+
+    span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: #1a1a2e;
+        border-radius: 2px;
+        transition: all $transition;
+    }
+
+    @media (max-width: $breakpoint-md) {
+        display: flex;
+    }
+}
+
+
+// BELOW TO VIEW PX - EM CONVERSION AND GENERALLY
+
+// ---- Responsive -----------------------------------------
+@media (max-width: $breakpoint-md) {
+    .nav__links {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: $color-white;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        z-index: 9000;
+        font-size: 18px;
+
+        &.open {
+            display: flex;
+        }
+    }
+
+    .header__nav {
+        flex-wrap: wrap;
+    }
+}
