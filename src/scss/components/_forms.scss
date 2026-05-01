@@ -1,0 +1,88 @@
+// =========================================================
+// COMPONENTS — FORMS
+// =========================================================
+@use '../abstracts' as *;
+
+// BELOW TO VIEW PX - EM CONVERSION AND GENERALLY - ONLY TOAST
+
+// ---- Toast notification ---------------------------------
+.toast {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: $color-black;
+    color: $color-white;
+    padding: 12px 20px;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9em;
+    font-weight: 500;
+    box-shadow: 0 12px 48px rgba(26,26,46,.18);
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all .35s cubic-bezier(.34, 1.56, .64, 1);
+    pointer-events: none;
+    z-index: 9999;
+
+    svg {
+        color: #4ade80;
+    }
+
+    &.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.form-group {
+    label {
+        display: block;
+        color: $color-black;
+        margin-bottom: 8px;
+
+        .required {
+            color: $color-primary;
+        }
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100%;
+        padding: 8px 12px;
+        font-family: $font-montserrat;
+        color: $color-black;
+        outline: none;
+        transition: border-color $transition;
+        background: $color-white;
+
+        &:focus {
+            border-color: $color-primary;
+        }
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        padding-right: 32px;
+    }
+}
+
+// ---- Inline row of form groups --------------------------
+.form-row {
+    display: flex;
+    gap: 16px;
+
+    .form-group { 
+        flex: 1; 
+    }
+}

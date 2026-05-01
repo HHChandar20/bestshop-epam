@@ -1,0 +1,91 @@
+@use '../abstracts' as *;
+
+.login-page {
+    background-color: #000000;
+    @include flex-center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: $color-white;
+    padding: 60px;
+    width: 480px;
+    height: 380px;
+
+    .login-form-group {
+        margin-bottom: 15px;
+        
+        input {
+            width: 100%;
+        }
+
+        label {
+            margin-bottom: 8px;
+        }
+    }
+}
+
+label {
+    display: block;
+}
+
+.required {
+    color: $color-primary;
+    margin-left: 3px;
+}
+
+input[type="email"],
+input[type="password"] {
+    padding: 12px;
+    border: 2px solid $color-primary;
+}
+
+input[type="password"] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23727174' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'%3E%3C/path%3E%3Ccircle cx='12' cy='12' r='3'%3E%3C/circle%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+    padding-right: 40px;
+}
+
+.password-container {
+    position: relative;
+}
+
+.actions-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    color: $color-gray-hr;
+    font-size: 0.9em;
+}
+
+.remember-me input {
+    margin-right: 8px;
+    width: 14px;
+    height: 14px;
+}
+
+.forgot-password {
+    color: $color-primary;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.8em;
+}
+
+.login-button {
+    background-color: $color-primary;
+    color: $color-white;
+    border: none;
+    padding: 15px;
+    font-size: 0.9em;
+    font-weight: 900;
+    width: 100%;
+    cursor: pointer;
+}
