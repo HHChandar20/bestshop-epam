@@ -1,0 +1,30 @@
+@use '../abstracts' as *;
+
+.info-cards {
+    display: flex;
+    padding: 60px 10%;
+    text-align: center;
+}
+
+.info-card {
+    flex: 1;
+    padding: 10px 20px;
+
+    &__icon {
+        width: 62px;
+        height: 62px;
+        background-color: $color-primary;
+        @include flex-center;
+        margin: 0 auto 16px;
+    }
+
+    p:first-of-type {
+        font-size: 1.4em;
+        font-weight: 700;
+        margin-bottom: 16px;
+    }
+
+    p:last-of-type {
+        font-size: 1.2em;
+    }
+}

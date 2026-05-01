@@ -1,0 +1,126 @@
+// =========================================================
+// PAGES — ABOUT US
+// Only styles that are exclusive to about.html.
+// Shared components (form-group, btn-send, benefits,
+// footer, header) live in their respective partials.
+// =========================================================
+
+// ---- Page hero (full-bleed banner with overlay text) ----
+// Uses .about-hero to avoid colliding with index .hero
+@use '../abstracts' as *;
+
+.about-hero {
+    position: relative;
+    height: 554px;
+    background-image: url("../../src/assets/About Us/banner-image.png");
+    background-size: cover;
+    background-position: center top;
+    @include flex-center;
+    text-align: center;
+
+    &__overlay {
+        @include absolute-fill;
+        background: rgba(7, 9, 14, 0.45);
+    }
+
+    &__content {
+        position: relative;
+        z-index: 1;
+
+        p:nth-child(1) {
+            font-size: 3.6em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: $color-white;
+        }
+
+        p:nth-child(2), p:nth-child(3) {
+            font-size: 1.2em;
+            color: $color-gray-border;
+        }
+    }
+}
+
+// ---- Arrivals section (text content + image side by side) -------
+.arrivals {
+    display: flex;
+    padding: 20px 10% 70px;
+    align-items: flex-start;
+
+    &__image {
+        width: 46%;
+        height: 352px;
+        flex-shrink: 0;
+        overflow: hidden;
+
+        img {
+            @include img-cover;
+        }
+    }
+
+    &__content {
+        flex: 1;
+        padding-right: 50px;
+
+        p:nth-child(1) {
+            font-size: 2.9em;
+            font-weight: 900;
+            margin-bottom: 22px;
+        }
+
+        p:nth-child(n+2) {
+            font-size: 1.2em;
+            margin-bottom: 22px;
+            color: $color-gray-text;
+        }
+
+        .btn {
+            padding: 14px 30px;
+        }
+    }
+}
+
+.team {
+    padding: 40px 10%;
+    text-align: center;
+
+    .team-header {
+        display: inline-block;
+        margin-bottom: 50px;
+        border-bottom: 2px solid $color-primary;
+
+        .title-medium {
+            font-size: 2.9em;
+            font-weight: 900;
+        }
+    }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .team-card {
+        .card-image {
+            margin-bottom: 20px;
+            img {
+                @include img-cover;
+            }
+        }
+
+        .member-name {
+            font-size: 1.6em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .member-role {
+            font-size: 1.2em;
+        }
+    }
+}
