@@ -2132,11 +2132,6 @@ ul {
   text-align: center;
 }
 
-.product-tabs {
-  margin: 60px auto;
-  text-align: center;
-}
-
 .product-tabs__nav {
   display: flex;
   justify-content: center;

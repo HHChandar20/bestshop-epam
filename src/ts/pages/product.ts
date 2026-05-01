@@ -34,7 +34,7 @@ async function init(): Promise<void> {
         fetchReviews(),
         ]);
 
-        const localReviews: Review[] = JSON.parse(localStorage.getItem('reviews') || '[]');
+        const localReviews: Review[] = JSON.parse(localStorage.getItem('reviews') ?? '[]');
 
         // Deduplicate: exclude local reviews whose ID already exists in the API response
         const apiIds = new Set(reviews.map((r) => r.id));
@@ -329,7 +329,7 @@ function initReviewForm(productId: string): void {
     };
 
     // Only save user-submitted reviews to localStorage (never API reviews)
-    const existingLocal: Review[] = JSON.parse(localStorage.getItem('reviews') || '[]');
+    const existingLocal: Review[] = JSON.parse(localStorage.getItem('reviews') ?? '[]');
     existingLocal.unshift(review);
     localStorage.setItem('reviews', JSON.stringify(existingLocal));
 

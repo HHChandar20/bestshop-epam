@@ -25,6 +25,7 @@ let quantity = 1;
 // ---------------------------------------------------------
 function init() {
     return __awaiter(this, void 0, void 0, function* () {
+        var _a;
         initQuantity();
         initTabs();
         updateCartCountUI();
@@ -35,7 +36,7 @@ function init() {
                 fetchProducts(),
                 fetchReviews(),
             ]);
-            const localReviews = JSON.parse(localStorage.getItem('reviews') || '[]');
+            const localReviews = JSON.parse((_a = localStorage.getItem('reviews')) !== null && _a !== void 0 ? _a : '[]');
             // Deduplicate: exclude local reviews whose ID already exists in the API response
             const apiIds = new Set(reviews.map((r) => r.id));
             const uniqueLocalReviews = localReviews.filter((r) => !apiIds.has(r.id));
@@ -292,6 +293,7 @@ function initReviewForm(productId) {
     });
     // --- Form submit ---
     form.addEventListener('submit', (e) => {
+        var _a;
         e.preventDefault();
         const formData = new FormData(form);
         const username = String(formData.get('username') || '').trim();
@@ -308,7 +310,7 @@ function initReviewForm(productId) {
             date: new Date().toISOString(),
         };
         // Only save user-submitted reviews to localStorage (never API reviews)
-        const existingLocal = JSON.parse(localStorage.getItem('reviews') || '[]');
+        const existingLocal = JSON.parse((_a = localStorage.getItem('reviews')) !== null && _a !== void 0 ? _a : '[]');
         existingLocal.unshift(review);
         localStorage.setItem('reviews', JSON.stringify(existingLocal));
         // Update in-memory list and re-render
