@@ -1,0 +1,400 @@
+// =========================================================
+// PAGES — CATALOG
+// =========================================================
+@use '../abstracts' as *;
+
+// BELOW TO VIEW PX - EM CONVERSION AND GENERALLY
+
+// ---- Two-column page layout -----------------------------
+.catalog-layout {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 40px;
+    padding: 0 200px 60px;
+    margin: 0 auto;
+
+    @media (max-width: $breakpoint-lg) {
+        grid-template-columns: 1fr;
+    }
+}
+
+// ---- Main column ----------------------------------------
+.catalog-main {
+    min-width: 0; // prevent grid blowout
+}
+
+// ---- Toolbar
+// Same grid columns + gap + padding as .catalog-layout so both snap
+// to the same vertical tracks:
+//   left cell  (1fr)   → results text + sort dropdown, ends at product grid edge
+//   right cell (240px) → search input, aligned with "Top Best Sets" title
+.catalog-toolbar {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 40px;
+    padding: 28px 200px 16px;
+    margin: 0 auto;
+    align-items: center;
+
+    @media (max-width: $breakpoint-lg) {
+        grid-template-columns: 1fr;
+    }
+
+    &__controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__results {
+        font-size: 0.9em;
+        color: $color-gray-text;
+        white-space: nowrap;
+    }
+}
+
+// ---- Sort dropdown --------------------------------------
+.catalog-sort {
+    border: 2px solid $color-gray-border;
+    border-radius: 3px;
+    padding: 12px 24px 12px 10px;
+    font-family: $font-montserrat;
+    font-size: 16px;
+    color: $color-gray-text;
+    background-color: $color-white;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    appearance: none;
+    cursor: pointer;
+    outline: none;
+    transition: border-color $transition;
+
+    &:focus {
+        border-color: $color-primary;
+    }
+}
+
+// ---- Search bar (right cell — fills the 240px sidebar column)
+.catalog-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 341px;
+
+    input {
+        border: 2px solid $color-gray-border;
+        border-radius: 3px;
+        outline: none;
+        padding: 7px 34px 7px 10px;
+        font-family: $font-montserrat;
+        font-size: 16px;
+        width: 341px;
+        height: 40px;
+        color: $color-black;
+        transition: border-color $transition;
+
+        &::placeholder {
+            color: $color-gray-text;
+        }
+
+        &:focus {
+            border-color: $color-primary;
+        }
+    }
+
+    button {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        color: $color-gray-text;
+        transition: color $transition;
+
+        &:hover {
+            color: $color-primary;
+        }
+    }
+}
+
+// ---- Product grid (3 columns in catalog) ----------------
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+
+    // Every card shares borders via a collapsed-border trick
+    .product-card {
+        border: none;
+        border-right: 1px solid $color-gray-border;
+        border-bottom: 1px solid $color-gray-border;
+
+        // Remove right border from every 3rd card
+        &:nth-child(3n) {
+            border-right: none;
+        }
+
+        // Remove bottom border from last row
+        &:nth-last-child(-n+3) {
+            border-bottom: none;
+        }
+    }
+
+    @media (max-width: $breakpoint-md) {
+        grid-template-columns: repeat(2, 1fr);
+
+        .product-card:nth-child(3n) {
+            border-right: 1px solid $color-gray-border;
+        }
+        .product-card:nth-child(2n) {
+            border-right: none;
+        }
+        .product-card:nth-last-child(-n+2) {
+            border-bottom: none;
+        }
+        .product-card:nth-last-child(-n+3) {
+            border-bottom: 1px solid $color-gray-border;
+        }
+    }
+
+    @media (max-width: $breakpoint-sm) {
+        grid-template-columns: 1fr;
+    }
+}
+
+// ---- Pagination -----------------------------------------
+.catalog-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-top: 32px;
+}
+
+.pag-btn {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid $color-gray-border;
+    background: $color-white;
+    font-family: $font-montserrat;
+    font-size: 0.85em;
+    font-weight: 600;
+    cursor: pointer;
+    color: $color-black;
+    transition: all $transition;
+
+    &:hover:not(.pag-btn--active) {
+        border-color: $color-primary;
+        color: $color-primary;
+    }
+
+    &--active {
+        background: $color-primary;
+        border-color: $color-primary;
+        color: $color-white;
+    }
+}
+
+.pag-pages {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pag-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 16px;
+    height: 34px;
+    border: 1px solid $color-gray-border;
+    background: $color-white;
+    font-family: $font-montserrat;
+    font-size: 0.8em;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: $color-black;
+    transition: all $transition;
+    margin-left: 6px;
+
+    &:hover {
+        border-color: $color-primary;
+        color: $color-primary;
+    }
+}
+
+.pag-nav:disabled {
+    visibility: hidden;
+}
+
+// ---- Sidebar --------------------------------------------
+.catalog-sidebar {
+    padding-top: 0;
+}
+
+.sidebar__title {
+    font-weight: 800;
+    font-size: 1em;
+    margin-bottom: 20px;
+    color: $color-black;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: opacity $transition;
+
+    &:hover {
+        opacity: 0.75;
+    }
+
+    &__img {
+        width: 64px;
+        height: 64px;
+        flex-shrink: 0;
+        overflow: hidden;
+        background: $color-gray-bg;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    &__info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    &__name {
+        font-size: 0.8em;
+        font-weight: 600;
+        line-height: 1.35;
+        margin-bottom: 4px;
+        color: $color-black;
+    }
+
+    &__stars {
+        display: flex;
+        gap: 1px;
+        margin-bottom: 4px;
+    }
+
+    &__price {
+        font-size: 0.82em;
+        font-weight: 700;
+        color: $color-black;
+    }
+}
+
+// ---- Star ratings ---------------------------------------
+.star {
+    font-size: 12px;
+    line-height: 1;
+
+    &--filled {
+        color: $color-yellow;
+    }
+
+    &--empty {
+        color: $color-gray-border;
+    }
+}
+
+// ---- Live search dropdown -------------------------------
+.catalog-search {
+    position: relative; // ensure dropdown anchors to this
+}
+
+.search-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 300;
+    list-style: none;
+    margin: 0;
+    background: $color-white;
+    border: 1px solid $color-gray-border;
+    border-radius: 3px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+    &--visible {
+        display: block;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 12px;
+        cursor: pointer;
+        transition: background $transition;
+
+        &:hover {
+            background: $color-gray-bg;
+        }
+
+        &--empty {
+            cursor: default;
+            color: $color-gray-text;
+            font-size: 13px;
+            font-style: italic;
+
+            &:hover {
+                background: transparent;
+            }
+        }
+    }
+
+    &__img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        flex-shrink: 0;
+        background: $color-gray-bg;
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+    }
+
+    &__name {
+        font-size: 13px;
+        font-weight: 500;
+        color: $color-black;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        mark {
+            background: transparent;
+            color: $color-primary;
+            font-weight: 700;
+        }
+    }
+
+    &__price {
+        font-size: 12px;
+        color: $color-gray-text;
+    }
+}
