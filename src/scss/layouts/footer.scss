@@ -54,12 +54,6 @@
     &__shipping {
         h4 {
             font-weight: 700;
-
-            // BELOW TO VIEW PX - EM CONVERSION
-            // MAYBE DONT USE HEADINGS, INSTEAD USE PARAGRAPHS WITH NTH-CHILD SELECTORS
-
-
-            font-size: 14px;
             margin-bottom: 10px;
         }
 
@@ -90,5 +84,21 @@
         color: $color-primary;
         flex-shrink: 0;
         margin-top: 2px;
+    }
+}
+
+@media (max-width: $breakpoint-lg) {
+    .footer {
+        &__top {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        &__col--contact {
+            grid-column: 1 / -1;
+        }
+        
+        &__contact-grid {
+            grid-template-columns: 1fr;
+        }
     }
 }
