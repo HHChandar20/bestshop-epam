@@ -1,9 +1,5 @@
-// =========================================================
-// PAGES — CART
-// =========================================================
 @use '../abstracts' as *;
 
-// ---- Hero -----------------------------------------------
 .cart-hero {
     position: relative;
     height: 220px;
@@ -43,7 +39,6 @@
     }
 }
 
-// ---- Cart section wrapper -------------------------------
 .cart-section {
     padding: 60px 10%;
     min-height: 400px;
@@ -57,7 +52,6 @@
     }
 }
 
-// ---- Empty state ----------------------------------------
 .cart-empty {
     display: flex;
     flex-direction: column;
@@ -73,7 +67,6 @@
     }
 }
 
-// ---- Thank-you state ------------------------------------
 .cart-thank-you {
     display: flex;
     flex-direction: column;
@@ -90,7 +83,6 @@
     }
 }
 
-// ---- Table ----------------------------------------------
 .cart-table-wrap {
     overflow-x: auto;
     margin-bottom: 40px;
@@ -143,7 +135,6 @@
     }
 }
 
-// ---- Row cells ------------------------------------------
 .cart-row {
     &__img {
         text-align: center;
@@ -186,7 +177,6 @@
     }
 }
 
-// ---- Qty control ----------------------------------------
 .cart-qty {
     display: inline-flex;
     align-items: center;
@@ -220,7 +210,6 @@
     }
 }
 
-// ---- Delete button --------------------------------------
 .cart-delete-btn {
     background: transparent;
     border: none;
@@ -235,7 +224,6 @@
     }
 }
 
-// ---- Cart footer (actions + summary) --------------------
 .cart-footer {
     display: grid;
     grid-template-columns: 1fr 380px;
@@ -247,7 +235,6 @@
     }
 }
 
-// ---- Action buttons -------------------------------------
 .cart-actions {
     display: flex;
     gap: 16px;
@@ -276,7 +263,6 @@
     }
 }
 
-// ---- Summary box ----------------------------------------
 .cart-summary {
     background: $color-gray-text;
     padding: 32px 36px;

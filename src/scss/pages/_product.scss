@@ -1,9 +1,5 @@
-// =========================================================
-// PAGES — PRODUCT DETAIL (CATALOG STYLE)
-// =========================================================
 @use '../abstracts' as *;
 
-// ---- Page wrapper ---------------------------------------
 .product-detail {
     padding: 85px 200px 60px;
 
@@ -15,7 +11,6 @@
         padding: 24px 16px 40px;
     }
 
-    // ---- Layout ------------------------------------------
     &__layout {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -29,7 +24,6 @@
         }
     }
 
-    // ---- Gallery -----------------------------------------
     &__gallery {
         display: flex;
         flex-direction: column;
@@ -85,7 +79,6 @@
         }
     }
 
-    // ---- Info --------------------------------------------
     &__info {
         display: flex;
         flex-direction: column;
@@ -125,7 +118,6 @@
         color: $color-gray-text;
     }
 
-    // ---- Options -----------------------------------------
     &__options {
         display: flex;
         flex-direction: column;
@@ -171,7 +163,6 @@
         }
     }
 
-    // ---- Actions -----------------------------------------
     &__actions {
         display: flex;
         align-items: center;
@@ -219,7 +210,6 @@
         justify-content: center;
     }
 
-    // ---- Payment -----------------------------------------
     &__payment {
         display: flex;
         align-items: center;
@@ -241,14 +231,12 @@
         }
     }
 
-    // ---- Error -------------------------------------------
     &__error {
         padding: 60px 0;
         text-align: center;
     }
 }
 
-// Navigation (the 3 buttons)
 .product-tabs__nav {
     display: flex;
     justify-content: center;
@@ -256,7 +244,6 @@
     border-bottom: 1px solid $color-gray-border;
 }
 
-// Tab buttons
 .product-tabs__btn {
     position: relative;
     padding: 12px 0;
@@ -274,7 +261,6 @@
         color: $color-black;
     }
 
-    // underline (hidden by default)
     &::after {
         content: '';
         position: absolute;
@@ -288,7 +274,6 @@
         transition: transform $transition;
     }
 
-    // active tab
     &--active {
         color: $color-black;
 
@@ -298,12 +283,10 @@
     }
 }
 
-// Content area
 .product-tabs__content {
     padding-top: 30px;
 }
 
-// Panels
 .product-tabs__panel {
     display: none;
     flex-direction: column;
@@ -323,10 +306,8 @@
 }
 
 
-// ---- Reviews --------------------------------------------
 .product-tabs {
 
-    // Layout (2 columns)
     .reviews-layout {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -339,7 +320,6 @@
         }
     }
 
-    // ---- LEFT: Reviews -----------------------------------
     .reviews-section {
 
         &__title {
@@ -356,7 +336,6 @@
         gap: 25px;
     }
 
-    // Single review
     .review-card {
         display: flex;
         gap: 16px;
@@ -408,7 +387,6 @@
         }
     }
 
-    // ---- RIGHT: Form -------------------------------------
     .review-form-section {
 
         &__title {
@@ -426,7 +404,6 @@
         }
     }
 
-    // Form
     .review-form {
         display: flex;
         flex-direction: column;
@@ -443,7 +420,6 @@
             }
         }
 
-        // Star rating widget
         .star-rating {
             display: flex;
             gap: 4px;
@@ -452,7 +428,7 @@
                 background: transparent;
                 border: none;
                 font-size: 22px;
-                color: $color-yellow;   // hollow/unselected color
+                color: $color-yellow;
                 cursor: pointer;
                 padding: 0;
                 line-height: 1;
@@ -460,11 +436,11 @@
 
                 &:hover,
                 &.is-hovered {
-                    color: $color-yellow;   // your pink/primary on hover
+                    color: $color-yellow;
                 }
 
                 &.is-selected {
-                    color: $color-yellow;   // filled stars
+                    color: $color-yellow;
                 }
 
                 &:hover {
@@ -528,7 +504,6 @@
     }
 }
 
-// ---- You May Also Like ----------------------------------
 .product-related {
     margin: 80px auto 60px;
     max-width: 1100px;
@@ -551,7 +526,6 @@
     }
 }
 
-// Title
 .product-related__title {
     font-size: 30px;
     font-weight: 700;
@@ -570,7 +544,6 @@
     }
 }
 
-// Grid (override catalog-grid behavior)
 .product-related__grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -584,7 +557,6 @@
         grid-template-columns: 1fr;
     }
 
-    // reset catalog borders
     .product-card {
         border: none !important;
     }

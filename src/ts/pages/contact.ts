@@ -1,15 +1,9 @@
-// =========================================================
-// CONTACT US — Form Validation & Submission
-// =========================================================
-
 import { updateCartCountUI } from '../services/cart.js';
 
 interface FieldState {
     input: HTMLInputElement | HTMLTextAreaElement;
     errorEl: HTMLElement;
 }
-
-// ---- Helpers --------------------------------------------
 
 function isValidEmail(value: string): boolean {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -35,8 +29,6 @@ function createErrorEl(): HTMLElement {
     return el;
 }
 
-// ---- Build field state & inject error elements ----------
-
 function setupField(
     selector: string,
     container: HTMLElement
@@ -51,8 +43,6 @@ function setupField(
 
     return { input, errorEl };
 }
-
-// ---- Validate a single field ----------------------------
 
 function validateField(state: FieldState, isEmail = false): boolean {
     const value = state.input.value.trim();
@@ -70,8 +60,6 @@ function validateField(state: FieldState, isEmail = false): boolean {
     clearError(state);
     return true;
 }
-
-// ---- Success / Error banner -----------------------------
 
 function showBanner(form: HTMLElement, success: boolean): void {
     document.querySelector(".form-banner")?.remove();
@@ -101,19 +89,15 @@ function showBanner(form: HTMLElement, success: boolean): void {
 
     document.body.appendChild(banner);
 
-    // Fade in
     requestAnimationFrame(() => {
         banner.style.opacity = "1";
     });
 
-    // Fade out then remove
     setTimeout(() => {
         banner.style.opacity = "0";
         setTimeout(() => banner.remove(), 300);
     }, 4000);
 }
-
-// ---- Main init ------------------------------------------
 
 function initContactForm(): void {
     const formSection = document.querySelector<HTMLElement>(".feedback__form");
@@ -121,9 +105,9 @@ function initContactForm(): void {
 
     const nameState    = setupField('input[type="text"]',    formSection);
     const emailState   = setupField('input[type="email"]',   formSection);
-    // Topic is the second text input — grab it by index
     const topicInput   = formSection.querySelectorAll<HTMLInputElement>('input[type="text"]')[1];
     let topicState: FieldState | null = null;
+
     if (topicInput) {
         const errorEl = createErrorEl();
         topicInput.insertAdjacentElement("afterend", errorEl);
@@ -133,7 +117,6 @@ function initContactForm(): void {
 
     if (!nameState || !emailState || !topicState || !messageState) return;
 
-    // ---- Real-time validation (on blur) -------------------
     nameState.input.addEventListener("blur", () =>
         validateField(nameState)
     );
@@ -142,8 +125,8 @@ function initContactForm(): void {
         validateField(emailState, true)
     );
 
-    // Live email check while typing (after first blur)
     let emailTouched = false;
+
     emailState.input.addEventListener("blur", () => { emailTouched = true; });
     emailState.input.addEventListener("input", () => {
         if (emailTouched) validateField(emailState, true);
@@ -157,7 +140,6 @@ function initContactForm(): void {
         validateField(messageState)
     );
 
-    // ---- Submit -------------------------------------------
     const sendBtn = formSection.querySelector<HTMLButtonElement>(".btn-send");
     if (!sendBtn) return;
 
@@ -171,17 +153,15 @@ function initContactForm(): void {
 
         if (!valid) return;
 
-        // Simulate async submission
         sendBtn.disabled = true;
         sendBtn.textContent = "SENDING…";
 
         setTimeout(() => {
-        const success = Math.random() > 0.2; // 80 % success rate for demo
+        const success = Math.random() > 0.2;
 
         showBanner(formSection, success);
 
         if (success) {
-            // Reset form fields
             [nameState, emailState, topicState, messageState].forEach((s) => {
                 s.input.value = "";
                 clearError(s);
@@ -193,8 +173,6 @@ function initContactForm(): void {
         }, 1200);
     });
 }
-
-// ---- Bootstrap ------------------------------------------
 
 document.addEventListener("DOMContentLoaded", () => {
     updateCartCountUI();

@@ -1,11 +1,5 @@
-// =========================================================
-// PAGES — CATALOG
-// =========================================================
 @use '../abstracts' as *;
 
-// BELOW TO VIEW PX - EM CONVERSION AND GENERALLY
-
-// ---- Two-column page layout -----------------------------
 .catalog-layout {
     display: grid;
     grid-template-columns: 1fr 240px;
@@ -18,16 +12,10 @@
     }
 }
 
-// ---- Main column ----------------------------------------
 .catalog-main {
-    min-width: 0; // prevent grid blowout
+    min-width: 0;
 }
 
-// ---- Toolbar
-// Same grid columns + gap + padding as .catalog-layout so both snap
-// to the same vertical tracks:
-//   left cell  (1fr)   → results text + sort dropdown, ends at product grid edge
-//   right cell (240px) → search input, aligned with "Top Best Sets" title
 .catalog-toolbar {
     display: grid;
     grid-template-columns: 1fr 240px;
@@ -53,7 +41,6 @@
     }
 }
 
-// ---- Sort dropdown --------------------------------------
 .catalog-sort {
     border: 2px solid $color-gray-border;
     border-radius: 3px;
@@ -75,7 +62,6 @@
     }
 }
 
-// ---- Search bar (right cell — fills the 240px sidebar column)
 .catalog-search {
     position: relative;
     display: flex;
@@ -123,13 +109,11 @@
     }
 }
 
-// ---- Product grid (3 columns in catalog) ----------------
 .catalog-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
 
-    // Every card shares borders via a collapsed-border trick
     .product-card {
         border: none;
         border-right: 1px solid $color-gray-border;
@@ -168,7 +152,6 @@
     }
 }
 
-// ---- Pagination -----------------------------------------
 .catalog-pagination {
     display: flex;
     align-items: center;
@@ -238,7 +221,6 @@
     visibility: hidden;
 }
 
-// ---- Sidebar --------------------------------------------
 .catalog-sidebar {
     padding-top: 0;
 }
@@ -302,7 +284,6 @@
     }
 }
 
-// ---- Star ratings ---------------------------------------
 .star {
     font-size: 12px;
     line-height: 1;

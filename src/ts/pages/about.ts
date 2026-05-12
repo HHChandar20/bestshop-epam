@@ -1,7 +1,3 @@
-// =========================================================
-// about.ts — About Us page logic
-// =========================================================
-
 import { updateCartCountUI } from '../services/cart.js';
 
 function init(): void {
@@ -16,6 +12,5 @@ function initSeeAllModels(): void {
         });
     });
 }
-
 
 document.addEventListener('DOMContentLoaded', init);

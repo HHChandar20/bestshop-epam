@@ -1,19 +1,5 @@
-/// =========================================================
-// BEST SHOP — MAIN.SCSS
-// Entry point: import order matters
-// =========================================================
-
-// ---- 1. Abstracts (no output, variables & tools first) --
 @use 'abstracts';
-
-// ---- 2. Base (fonts → reset) ----------------------------
 @use 'base';
-
-// ---- 3. Components --------------------------------------
 @use 'components';
-
-// ---- 4. Layouts -----------------------------------------
 @use 'layouts';
-
-// ---- 5. Pages -------------------------------------------
 @use 'pages';

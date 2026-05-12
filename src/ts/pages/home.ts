@@ -1,38 +1,29 @@
-// =========================================================
-// home.ts — Homepage logic
-// =========================================================
-
-import { fetchProducts } from '../services/api.js';
+import { fetchProducts, fetchReviews } from '../services/api.js';
 import { addToCart, updateCartCountUI } from '../services/cart.js';
 import { showToast } from '../utils/ui.js';
 import type { Product } from '../models/types.js';
-
-// ---------------------------------------------------------
-// Init
-// ---------------------------------------------------------
+import type { Review } from '../models/types.js';
 
 async function init(): Promise<void> {
     updateCartCountUI();
 
     let products: Product[] = [];
+    let reviews: Review[] = [];
 
     try {
-        products = await fetchProducts();
+        [products, reviews] = await Promise.all([fetchProducts(), fetchReviews()]);
     } catch (err) {
-        console.error('Failed to load products:', err);
+        console.error('Failed to load data:', err);
         return;
     }
 
     renderSelectedProducts(products);
     renderNewArrivals(products);
+    renderTestimonials(reviews, products);
     initAddToCartButtons(products);
     initHeroButton();
     initSlider();
 }
-
-// ---------------------------------------------------------
-// Selected Products (4 on-sale items)
-// ---------------------------------------------------------
 
 function renderSelectedProducts(products: Product[]): void {
     const grid = document.getElementById('selectedGrid');
@@ -45,25 +36,48 @@ function renderSelectedProducts(products: Product[]): void {
     bindProductCards(grid, products);
 }
 
-// ---------------------------------------------------------
-// New Arrivals (4 most popular items)
-// ---------------------------------------------------------
-
 function renderNewArrivals(products: Product[]): void {
     const grid = document.getElementById('newArrivalsGrid');
     if (!grid) return;
 
     const arrivals = [...products]
-        .sort((a, b) => b.popularity - a.popularity)
+        .sort((a, b) => parseInt(b.id) - parseInt(a.id))
         .slice(0, 4);
 
     grid.innerHTML = arrivals.map((p) => renderProductCard(p, 'NEW')).join('');
     bindProductCards(grid, products);
 }
 
-// ---------------------------------------------------------
-// Card template
-// ---------------------------------------------------------
+function renderTestimonials(reviews: Review[], products: Product[]): void {
+    const grid = document.getElementById('testimonialsGrid');
+    if (!grid) return;
+
+    // Pick the 3 most recent reviews
+    const recent = [...reviews]
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .slice(0, 3);
+
+    if (recent.length === 0) return;
+
+    grid.innerHTML = recent.map((r) => {
+        const product = products.find((p) => p.id === r.productId);
+        const initial = r.username.charAt(0).toUpperCase();
+        const stars = Array.from({ length: 5 }, (_, i) =>
+            `<span style="color:${i < r.rating ? '#f59e0b' : '#d1d5db'}">★</span>`
+        ).join('');
+
+        return `
+            <article class="testimonial-card">
+                <div class="testimonial-card__avatar testimonial-card__avatar--initial">
+                    ${initial}
+                </div>
+                <div class="testimonial-card__header">${r.username}</div>
+                <div>${stars}</div>
+                <p class="testimonial-card__text">${r.comment}</p>
+                <p class="testimonial-card__name">${product ? ` — ${product.name}` : ''}</p>
+            </article>`;
+    }).join('');
+}
 
 function renderProductCard(p: Product, badgeOverride?: string): string {
     const badge = badgeOverride
@@ -148,12 +162,10 @@ function initSlider(): void {
 
     let current = 0;
 
-    // Add hover zoom effect to all cards (CSS handles it, but ensure class is present)
     cards.forEach((card) => {
         card.classList.add('reveal', 'visible');
     });
 
-    // Auto-highlight one card at a time every 2.5s
     function highlight(): void {
         cards.forEach((c) => c.classList.remove('suit-card--active'));
         cards[current].classList.add('suit-card--active');

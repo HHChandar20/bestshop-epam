@@ -1,12 +1,3 @@
-// =========================================================
-// PAGES — ABOUT US
-// Only styles that are exclusive to about.html.
-// Shared components (form-group, btn-send, benefits,
-// footer, header) live in their respective partials.
-// =========================================================
-
-// ---- Page hero (full-bleed banner with overlay text) ----
-// Uses .about-hero to avoid colliding with index .hero
 @use '../abstracts' as *;
 
 .about-hero {
@@ -65,7 +56,6 @@
         }
 }
 
-// ---- Arrivals section (text content + image side by side) -------
 .arrivals {
     display: flex;
     flex-direction: row;

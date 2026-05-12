@@ -1,16 +1,8 @@
-// =========================================================
-// catalog.ts — Catalog page logic
-// =========================================================
-
 import type { SortKey } from '../models/enums.js';
 import type { Product } from '../models/types.js';
 import { fetchProducts } from '../services/api.js';
 import { addToCart, updateCartCountUI } from '../services/cart.js';
 import { renderStars, showToast, shuffleArray } from '../utils/ui.js';
-
-// ---------------------------------------------------------
-// State
-// ---------------------------------------------------------
 
 let allProducts: Product[] = [];
 let filteredProducts: Product[] = [];
@@ -20,10 +12,6 @@ let searchQuery = '';
 let urlCategory = '';
 
 const ITEMS_PER_PAGE = 12;
-
-// ---------------------------------------------------------
-// Init
-// ---------------------------------------------------------
 
 async function init(): Promise<void> {
     readUrlParams();
@@ -42,19 +30,11 @@ async function init(): Promise<void> {
     updateCartCountUI();
 }
 
-// ---------------------------------------------------------
-// URL params
-// ---------------------------------------------------------
-
 function readUrlParams(): void {
     const params = new URLSearchParams(window.location.search);
     const cat = params.get('category');
     if (cat) urlCategory = cat;
 }
-
-// ---------------------------------------------------------
-// Filter + sort + render pipeline
-// ---------------------------------------------------------
 
 function applyAndRender(): void {
     let result = [...allProducts];
@@ -75,10 +55,6 @@ function applyAndRender(): void {
     renderPagination();
     updateResultsCount();
 }
-
-// ---------------------------------------------------------
-// Sort
-// ---------------------------------------------------------
 
 function sortProducts(products: Product[]): Product[] {
     switch (currentSort) {
@@ -107,10 +83,6 @@ function initSort(): void {
         applyAndRender();
     });
 }
-
-// ---------------------------------------------------------
-// Grid
-// ---------------------------------------------------------
 
 function renderGrid(): void {
     const grid = document.querySelector<HTMLElement>('.catalog-grid');
@@ -163,10 +135,6 @@ function renderProductCard(p: Product): string {
         </article>`;
 }
 
-// ---------------------------------------------------------
-// Results count
-// ---------------------------------------------------------
-
 function updateResultsCount(): void {
     const el = document.querySelector<HTMLElement>('.catalog-toolbar__results');
     if (!el) return;
@@ -175,10 +143,6 @@ function updateResultsCount(): void {
     const end = Math.min(currentPage * ITEMS_PER_PAGE, total);
     el.textContent = total === 0 ? 'No results' : `Showing ${start}–${end} Of ${total} Results`;
 }
-
-// ---------------------------------------------------------
-// Pagination
-// ---------------------------------------------------------
 
 function renderPagination(): void {
     const container = document.querySelector<HTMLElement>('.catalog-pagination');
@@ -222,10 +186,6 @@ function renderPagination(): void {
     updateResultsCount();
     document.querySelector('.catalog-layout')?.scrollIntoView({ behavior: 'smooth' });
 }
-
-// ---------------------------------------------------------
-// Search
-// ---------------------------------------------------------
 
 function initSearch(): void {
     const input = document.querySelector<HTMLInputElement>('.catalog-search input');
@@ -325,10 +285,6 @@ function showNotFoundPopup(query: string): void {
     setTimeout(() => popup.remove(), 3000);
 }
 
-// ---------------------------------------------------------
-// Sidebar: Top Best Sets
-// ---------------------------------------------------------
-
 function renderTopBestSets(): void {
     const sidebar = document.querySelector<HTMLElement>('.catalog-sidebar');
     if (!sidebar) return;
@@ -355,9 +311,5 @@ function renderTopBestSets(): void {
         sidebar.appendChild(item);
     });
 }
-
-// ---------------------------------------------------------
-// Bootstrap
-// ---------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', init);

@@ -1,12 +1,3 @@
-// =========================================================
-// PAGES — CONTACT US
-// Only styles that are exclusive to contact-us.html.
-// Shared components (form-group, btn-send, benefits,
-// footer, header) live in their respective partials.
-// =========================================================
-
-// ---- Page hero (full-bleed banner with overlay text) ----
-// Uses .contact-hero to avoid colliding with index .hero
 @use '../abstracts' as *;
 
 .contact-hero {
@@ -65,7 +56,6 @@
     }
 }
 
-// ---- Feedback section (image + form side by side) -------
 .feedback {
     display: flex;
     flex-direction: row;

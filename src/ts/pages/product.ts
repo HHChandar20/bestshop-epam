@@ -1,24 +1,12 @@
-// =========================================================
-// product.ts — Product detail page logic
-// =========================================================
-
 import type { Product, Review } from '../models/types.js';
 import { fetchProducts, fetchReviews } from '../services/api.js';
 import { addToCart, updateCartCountUI } from '../services/cart.js';
 import { renderStars, showToast, shuffleArray } from '../utils/ui.js';
 
-// ---------------------------------------------------------
-// State
-// ---------------------------------------------------------
-
 let currentProduct: Product | null = null;
 let allProducts: Product[] = [];
 let allReviews: Review[] = [];
 let quantity = 1;
-
-// ---------------------------------------------------------
-// Init
-// ---------------------------------------------------------
 
 async function init(): Promise<void> {
     initQuantity();
@@ -36,7 +24,6 @@ async function init(): Promise<void> {
 
         const localReviews: Review[] = JSON.parse(localStorage.getItem('reviews') ?? '[]');
 
-        // Deduplicate: exclude local reviews whose ID already exists in the API response
         const apiIds = new Set(reviews.map((r) => r.id));
         const uniqueLocalReviews = localReviews.filter((r) => !apiIds.has(r.id));
 
@@ -60,10 +47,6 @@ async function init(): Promise<void> {
     renderRelated(product);
     initCartButton();
 }
-
-// ---------------------------------------------------------
-// Render: product
-// ---------------------------------------------------------
 
 function renderProduct(p: Product): void {
     document.title = `${p.name} — Best Shop`;
@@ -155,10 +138,6 @@ function populateSelect(id: string, options: string[], selected: string): void {
     ).join('');
 }
 
-// ---------------------------------------------------------
-// Render: related products
-// ---------------------------------------------------------
-
 function renderRelated(p: Product): void {
     const grid = document.getElementById('relatedGrid');
     if (!grid) return;
@@ -208,10 +187,6 @@ function renderRelated(p: Product): void {
     });
 }
 
-// ---------------------------------------------------------
-// Quantity
-// ---------------------------------------------------------
-
 function initQuantity(): void {
     const minus = document.getElementById('qtyMinus');
     const plus = document.getElementById('qtyPlus');
@@ -227,10 +202,6 @@ function initQuantity(): void {
     });
 }
 
-// ---------------------------------------------------------
-// Tabs
-// ---------------------------------------------------------
-
 function initTabs(): void {
     const btns = document.querySelectorAll<HTMLButtonElement>('.product-tabs__btn');
     const panels = document.querySelectorAll<HTMLElement>('.product-tabs__panel');
@@ -244,10 +215,6 @@ function initTabs(): void {
         });
     });
 }
-
-// ---------------------------------------------------------
-// Cart
-// ---------------------------------------------------------
 
 function initCartButton(): void {
     const btn = document.querySelector<HTMLButtonElement>('.product-detail__cart-btn');
@@ -265,15 +232,10 @@ function initCartButton(): void {
     });
 }
 
-// ---------------------------------------------------------
-// Review Form
-// ---------------------------------------------------------
-
 function initReviewForm(productId: string): void {
     const form = document.getElementById('reviewForm') as HTMLFormElement | null;
     if (!form) return;
 
-    // --- Star rating wiring ---
     const ratingInput = document.getElementById('ratingInput') as HTMLInputElement;
     const starContainer = document.getElementById('starRating');
     const stars = document.querySelectorAll<HTMLButtonElement>('.star-rating__star');
@@ -289,7 +251,6 @@ function initReviewForm(productId: string): void {
         });
     }
 
-    // Mouse leave on the container resets to selected state
     starContainer?.addEventListener('mouseleave', () => {
         updateStars(selectedRating, true);
     });
@@ -308,7 +269,6 @@ function initReviewForm(productId: string): void {
         });
     });
 
-    // --- Form submit ---
     form.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -328,16 +288,13 @@ function initReviewForm(productId: string): void {
         date: new Date().toISOString(),
     };
 
-    // Only save user-submitted reviews to localStorage (never API reviews)
     const existingLocal: Review[] = JSON.parse(localStorage.getItem('reviews') ?? '[]');
     existingLocal.unshift(review);
     localStorage.setItem('reviews', JSON.stringify(existingLocal));
 
-    // Update in-memory list and re-render
     allReviews.unshift(review);
     renderReviews(productId);
 
-    // Reset form and stars
     form.reset();
     selectedRating = 0;
     ratingInput.value = '';
@@ -350,10 +307,6 @@ function initReviewForm(productId: string): void {
     });
 }
 
-// ---------------------------------------------------------
-// Error
-// ---------------------------------------------------------
-
 function showError(message: string): void {
     const section = document.querySelector<HTMLElement>('.product-detail');
     if (section) {
@@ -364,9 +317,5 @@ function showError(message: string): void {
         </div>`;
     }
 }
-
-// ---------------------------------------------------------
-// Bootstrap
-// ---------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', init);

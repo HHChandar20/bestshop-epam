@@ -1,7 +1,3 @@
-// =========================================================
-// cart.ts — shared cart logic used by catalog + product
-// =========================================================
-
 import type { CartItem } from '../models/types.js';
 
 export function getCart(): CartItem[] {

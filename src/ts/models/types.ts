@@ -5,9 +5,9 @@ export interface Product {
   name: string;
   price: number;
   imageUrl: string;
-  category: ProductCategory;  // was: string
-  color: ProductColor;        // was: string
-  size: ProductSize;          // was: string
+  category: ProductCategory;
+  color: ProductColor;
+  size: ProductSize;
   salesStatus: boolean;
   rating: number;
   popularity: number;

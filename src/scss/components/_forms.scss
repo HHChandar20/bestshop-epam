@@ -1,11 +1,5 @@
-// =========================================================
-// COMPONENTS — FORMS
-// =========================================================
 @use '../abstracts' as *;
 
-// BELOW TO VIEW PX - EM CONVERSION AND GENERALLY - ONLY TOAST
-
-// ---- Toast notification ---------------------------------
 .toast {
     position: fixed;
     bottom: 32px;
@@ -77,7 +71,6 @@
     }
 }
 
-// ---- Inline row of form groups --------------------------
 .form-row {
     display: flex;
     gap: 16px;

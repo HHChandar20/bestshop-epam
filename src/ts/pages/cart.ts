@@ -1,22 +1,10 @@
-// =========================================================
-// cart.ts — Cart page logic
-// =========================================================
-
 import type { CartItem } from '../models/types.js';
 import { getCart, saveCart, getCartCount, updateCartCountUI } from '../services/cart.js';
 import { showToast } from '../utils/ui.js';
 
-// ---------------------------------------------------------
-// Constants
-// ---------------------------------------------------------
-
 const SHIPPING_COST = 30;
 const DISCOUNT_THRESHOLD = 3000;
 const DISCOUNT_RATE = 0.1;
-
-// ---------------------------------------------------------
-// Init
-// ---------------------------------------------------------
 
 function init(): void {
     updateCartCountUI();
@@ -24,27 +12,22 @@ function init(): void {
     bindActions();
 }
 
-// ---------------------------------------------------------
-// Render
-// ---------------------------------------------------------
-
 function renderCart(): void {
     const cart = getCart();
-    const emptyEl = document.getElementById('cartEmpty')!;
-    const contentEl = document.getElementById('cartContent')!;
-    const thankYouEl = document.getElementById('cartThankYou')!;
+    const emptyElement = document.getElementById('cartEmpty')!;
+    const contentElement = document.getElementById('cartContent')!;
+    const thankYouElement = document.getElementById('cartThankYou')!;
 
-    // Hide thank-you if we're re-rendering normally
-    thankYouEl.style.display = 'none';
+    thankYouElement.style.display = 'none';
 
     if (cart.length === 0) {
-        emptyEl.style.display = 'flex';
-        contentEl.style.display = 'none';
+        emptyElement.style.display = 'flex';
+        contentElement.style.display = 'none';
         return;
     }
 
-    emptyEl.style.display = 'none';
-    contentEl.style.display = 'block';
+    emptyElement.style.display = 'none';
+    contentElement.style.display = 'block';
 
     renderRows(cart);
     renderSummary(cart);
@@ -81,8 +64,7 @@ function renderRows(cart: CartItem[]): void {
             </td>
         </tr>
     `).join('');
-
-    // Bind row buttons
+    
     tbody.querySelectorAll<HTMLButtonElement>('.cart-qty__minus').forEach((btn) => {
         btn.addEventListener('click', () => changeQty(btn.dataset.id!, -1));
     });
@@ -101,27 +83,23 @@ function renderSummary(cart: CartItem[]): void {
     const discountedSubTotal = subTotal - discountAmount;
     const total = discountedSubTotal + SHIPPING_COST;
 
-    const subTotalEl = document.getElementById('cartSubTotal')!;
-    const shippingEl = document.getElementById('cartShipping')!;
-    const totalEl = document.getElementById('cartTotal')!;
+    const subTotalElement = document.getElementById('cartSubTotal')!;
+    const shippingElement = document.getElementById('cartShipping')!;
+    const totalElement = document.getElementById('cartTotal')!;
     const discountRow = document.getElementById('cartDiscountRow')!;
-    const discountEl = document.getElementById('cartDiscount')!;
+    const discountElement = document.getElementById('cartDiscount')!;
 
-    subTotalEl.textContent = `$${subTotal}`;
-    shippingEl.textContent = `$${SHIPPING_COST}`;
-    totalEl.textContent = `$${total}`;
+    subTotalElement.textContent = `$${subTotal}`;
+    shippingElement.textContent = `$${SHIPPING_COST}`;
+    totalElement.textContent = `$${total}`;
 
     if (discountApplied) {
         discountRow.style.display = 'flex';
-        discountEl.textContent = `-$${discountAmount}`;
+        discountElement.textContent = `-$${discountAmount}`;
     } else {
         discountRow.style.display = 'none';
     }
 }
-
-// ---------------------------------------------------------
-// Actions
-// ---------------------------------------------------------
 
 function changeQty(id: string, delta: number): void {
     const cart = getCart();
@@ -156,20 +134,19 @@ function checkout(): void {
     saveCart([]);
     updateCartCountUI();
 
-    const emptyEl = document.getElementById('cartEmpty')!;
-    const contentEl = document.getElementById('cartContent')!;
-    const thankYouEl = document.getElementById('cartThankYou')!;
+    const emptyElement = document.getElementById('cartEmpty')!;
+    const contentElement = document.getElementById('cartContent')!;
+    const thankYouElement = document.getElementById('cartThankYou')!;
 
-    emptyEl.style.display = 'none';
-    contentEl.style.display = 'none';
-    thankYouEl.style.display = 'flex';
+    emptyElement.style.display = 'none';
+    contentElement.style.display = 'none';
+    thankYouElement.style.display = 'flex';
 }
 
 function bindActions(): void {
     document.getElementById('clearCartBtn')?.addEventListener('click', clearCart);
     document.getElementById('checkoutBtn')?.addEventListener('click', checkout);
 
-    // Make cart icon link to cart page (update counter visibility)
     const cartCount = document.getElementById('cartCount')!;
     const count = getCartCount();
     if (count === 0) {

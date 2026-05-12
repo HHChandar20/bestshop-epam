@@ -1,9 +1,5 @@
-// =========================================================
-// COMPONENTS — PRODUCT CARDS
-// =========================================================
 @use '../abstracts' as *;
 
-// ---- Standard product card ------------------------------
 .product-card {
     background: $color-white;
     overflow: hidden;
@@ -61,7 +57,6 @@
     }
 }
 
-// ---- Suitcase card (overlay style) ----------------------
 .suit-card {
     height: 600px;
     position: relative;
@@ -101,7 +96,6 @@
     }
 }
 
-// ---- Testimonial card -----------------------------------
 .testimonial-card {
     background: $color-white;
     padding: 36px 28px 28px;
@@ -131,6 +125,11 @@
         }
     }
 
+    &__header {
+        font-weight: 700;
+        font-size: 1.1em;
+    }
+
     &__text {
         font-size: 1.2em;
         line-height: 1.75;
@@ -141,6 +140,19 @@
         font-size: 1.1em;
         color: $color-primary;
     }
+}
+
+.testimonial-card__avatar--initial {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--pink);
+    color: #000;
+    font-weight: 700;
+    font-size: 1.4rem;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
 }
 
 .catalog-grid {

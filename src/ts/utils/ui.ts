@@ -1,7 +1,3 @@
-// =========================================================
-// ui.ts — shared UI helpers used across pages
-// =========================================================
-
 export function renderStars(rating: number): string {
     const full = Math.round(rating);
     return Array.from({ length: 5 }, (_, i) =>

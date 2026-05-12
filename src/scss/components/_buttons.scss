@@ -1,9 +1,5 @@
-// =========================================================
-// COMPONENTS — BUTTONS
-// =========================================================
 @use '../abstracts' as *;
 
-// ---- Text buttons ---------------------------------------
 .btn {
     display: inline-flex;
     align-items: center;
@@ -53,7 +49,6 @@
     }
 }
 
-// ---- Icon buttons ---------------------------------------
 .icon-btn {
     width: 38px;
     height: 38px;
@@ -83,11 +78,6 @@
     @include flex-center;
     transform: translate(25%, -25%);
 }
-
-// ---- Contact-page send button ---------------------------
-// Re-uses .btn shape/colour via composition;
-// kept as a standalone class so the HTML doesn't need
-// multiple utility classes on one element.
 
 .btn-send {
     @include flex-center;
