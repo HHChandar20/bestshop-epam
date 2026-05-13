@@ -103,12 +103,25 @@
             padding-bottom: 30px;
 
             p:nth-child(1) {
-                font-size: 2.4em;
+                font-size: 2em;
             }
         }
 
         &__image {
             width: 100%;
+        }
+    }
+
+    @media (max-width: $breakpoint-sm) {
+        &__content {
+            p:nth-child(1) {
+                font-size: 1.6em;
+            }
+
+            .btn {
+                font-size: 1em;
+                padding: 10px 24px;
+            }
         }
     }
 }
@@ -132,10 +145,6 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 30px;
-
-        @media (max-width: 768px) {
-            grid-template-columns: 1fr;
-        }
     }
 
     .team-card {
@@ -154,6 +163,46 @@
 
         .member-role {
             font-size: 1.2em;
+        }
+    }
+
+    @media (max-width: $breakpoint-md) {
+        .team-header {
+            .title-medium {
+                font-size: 2.2em;
+            }
+        }
+
+        .team-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .team-card {
+            .member-name {
+                font-size: 1.3em;
+            }
+
+            .member-role {
+                font-size: 1em;
+            }
+        }
+    }
+
+    @media (max-width: $breakpoint-sm) {
+        .team-header {
+            .title-medium {
+                font-size: 1.6em;
+            }
+        }
+
+        .team-card {
+            .member-name {
+                font-size: 1em;
+            }
+            
+            .member-role {
+                font-size: 0.7em;
+            }
         }
     }
 }

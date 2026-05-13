@@ -7,8 +7,14 @@
     padding: 0 200px 60px;
     margin: 0 auto;
 
-    @media (max-width: $breakpoint-lg) {
+    @media (max-width: 1500px) {
         grid-template-columns: 1fr;
+        padding: 0 10% 60px;
+    }
+
+    @media (max-width: $breakpoint-sm) {
+        padding-left: 2em;
+        padding-right: 2em;
     }
 }
 
@@ -24,10 +30,6 @@
     margin: 0 auto;
     align-items: center;
 
-    @media (max-width: $breakpoint-lg) {
-        grid-template-columns: 1fr;
-    }
-
     &__controls {
         display: flex;
         align-items: center;
@@ -38,6 +40,28 @@
         font-size: 0.9em;
         color: $color-gray-text;
         white-space: nowrap;
+    }
+
+    @media (max-width: 1500px) {
+        padding: 28px 10% 16px;
+    }
+
+    @media (max-width: $breakpoint-lg) {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    @media (max-width: $breakpoint-md) {
+        padding-top: 0;
+    }
+
+    @media (max-width: $breakpoint-sm) {
+        padding: 5px 2em;
+        margin-bottom: 2em;
+        &__controls {
+            align-items: start;
+            flex-direction: column;
+        }
     }
 }
 
@@ -66,7 +90,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    width: 341px;
+    width: 240px;
 
     input {
         border: 2px solid $color-gray-border;
@@ -114,40 +138,19 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
 
-    .product-card {
-        border: none;
-        border-right: 1px solid $color-gray-border;
-        border-bottom: 1px solid $color-gray-border;
-
-        // Remove right border from every 3rd card
-        &:nth-child(3n) {
-            border-right: none;
-        }
-
-        // Remove bottom border from last row
-        &:nth-last-child(-n+3) {
-            border-bottom: none;
-        }
+    @media (max-width: 1500px) {
+        grid-template-columns: repeat(4, 1fr);
     }
 
-    @media (max-width: $breakpoint-md) {
+    @media (max-width: 1300px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: $breakpoint-lg) {
         grid-template-columns: repeat(2, 1fr);
-
-        .product-card:nth-child(3n) {
-            border-right: 1px solid $color-gray-border;
-        }
-        .product-card:nth-child(2n) {
-            border-right: none;
-        }
-        .product-card:nth-last-child(-n+2) {
-            border-bottom: none;
-        }
-        .product-card:nth-last-child(-n+3) {
-            border-bottom: 1px solid $color-gray-border;
-        }
     }
 
-    @media (max-width: $breakpoint-sm) {
+    @media (max-width: 700px) {
         grid-template-columns: 1fr;
     }
 }

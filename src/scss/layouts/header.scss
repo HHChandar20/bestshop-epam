@@ -56,6 +56,12 @@
         padding: 14px 5%;
         gap: 32px;
     }
+
+    @media (max-width: $breakpoint-md) {
+        &__line {
+            display: none;
+        }
+    }
 }
 
 .upper__header {
